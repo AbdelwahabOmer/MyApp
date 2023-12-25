@@ -1,0 +1,22 @@
+﻿
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signinManager
+
+
+<ul class="navbar-nav">
+    @if (_signinManager.IsSignedIn(User))
+    {
+    <li class="nav-item">
+
+        hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)
+        <a class="btn btn-warning" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
+        <a class="btn btn-danger" asp-controller="Account" asp-action="SignOut">SignOut</a>
+    </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="btn btn-outline-primary" asp-controller="Account" asp-action="SignIn" asp-route-returnUrl="@Context.Request.Path">SignIn</a>
+            <a class="btn btn-primary" asp-controller="Account" asp-action="SignUp">Register</a>
+        </li>
+    }
+</ul>
