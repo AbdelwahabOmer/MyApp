@@ -5,11 +5,12 @@
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>SignIn</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <title>Sign In</title>
 
     <environment include="Development">
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
@@ -17,52 +18,96 @@
     <environment exclude="Development">
         <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     </environment>
+    <link rel="stylesheet" href="~/assets/css/app.css">
 
+    <style>
+
+    </style>
 </head>
+
+
+
 <body>
 
-    <div class="container">
+    <div id="auth">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 mx-auto">
+                    <div class="card pt-4">
+                        <div class="card-body">
+                            <div class="text-center mb-2">
+                                <img src="~/images/favicon.ico" height="75" class='mb-4'>
+                            </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <h4>SignIn</h4>
-                <hr />
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                </form>
+                            <form method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @* <div class="form-group position-relative has-icon-left">
+                                <label asp-for="CMP" class="control-label"></label>
+                                <div class="position-relative">
+                                <input asp-for="CMP" class="form-control" />
+                                <div class="form-control-icon">
+                                <i data-feather="user"></i>
+                                </div>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                </div> *@
+                                <div class="form-group position-relative has-icon-left">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <div class="position-relative">
+                                        <input asp-for="Email" class="form-control" />
+                                        <div class="form-control-icon">
+                                            <i data-feather="mail"></i>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group position-relative has-icon-left">
+                                    <label asp-for="Password" class="control-label"></label>
+                                    <div class="position-relative">
+                                        <input asp-for="Password" class="form-control" />
+                                        <div class="form-control-icon">
+                                            <i data-feather="lock"></i>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group position-relative has-icon-left">
+                                    @*@Html.MathCaptcha()*@
+                                    @*@Html.Captcha(3)*@
+                                    @* <p class="text-danger">@ViewBag.ErrorCaptcha</p> *@
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                                        </label>
+                                    </div>
+                                </div>
 
-                <br />
-                <div>
-                    <p><a asp-action="ForgotPassword" asp-controller="Account">Forgot Password?</a></p>
-                    <p><a asp-action="SignUp" asp-controller="Account">Sign Up</a></p>
+                                <div class="clearfix my-4">
+                                    <div class="float-start">
+                                        <a asp-action="SignUp" asp-controller="Account">New Registration</a>
+                                    </div>
+                                    <div class="float-end">
+                                        <a asp-action="ForgotPassword" asp-controller="Account">Forget Your Password</a>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <input type="submit" value="Sign In" class="btn btn-primary float-end" style="width:100%" />
+                                </div>
+
+                            </form>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-8">
-                <img src="~/images/sign-up.webp" class="img-fluid" />
-            </div>
         </div>
-
     </div>
 
 
+    <script src="~/assets/js/feather-icons/feather.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/js/main.js"></script>
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/jquery-validate/jquery.validate.js"></script>
@@ -77,6 +122,5 @@
         <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
-
 </body>
 </html>

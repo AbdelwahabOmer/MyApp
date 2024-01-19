@@ -1,52 +1,445 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MyApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MyApp.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="~/images/favicon.ico">
+    <title>@ViewData["Title"]</title>
+
+
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="~/theme_light/css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="~/theme_light/css/feather.css">
+    <link rel="stylesheet" href="~/theme_light/css/select2.css">
+    <link rel="stylesheet" href="~/theme_light/css/dropzone.css">
+    <link rel="stylesheet" href="~/theme_light/css/uppy.min.css">
+    <link rel="stylesheet" href="~/theme_light/css/jquery.steps.css">
+    <link rel="stylesheet" href="~/theme_light/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="~/theme_light/css/quill.snow.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="~/theme_light/css/daterangepicker.css">
+    <!-- dataTables CSS -->
+    <link rel="stylesheet" href="~/theme_light/css/dataTables.bootstrap4.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="~/theme_light/css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="~/theme_light/css/app-dark.css" id="darkTheme" disabled>
+
+
+    <!-- Dashboard -->
+    <link href="~/dashboard/c3.css" rel="stylesheet" />
+    <link href="~/dashboard/c3.min.css" rel="stylesheet" />
+    <!-- alertify -->
+    <link href="~/alertifyjs/alertify.css" rel="stylesheet" />
+    <link href="~/alertifyjs/alertify.min.css" rel="stylesheet" />
+
+    @RenderSection("Css", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+<body class="vertical  light ">
+
+
+
+    <div class="wrapper">
+        <nav class="topnav navbar navbar-light">
+            <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+                <i class="fe fe-menu navbar-toggler-icon"></i>
+            </button>
+
+
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+                        <i class="fe fe-sun fe-16"></i>
+                    </a>
+                </li>
+                <li class="nav-item nav-notif">
+                    <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
+                        <span class="fe fe-bell fe-16"></span>
+                        <span class="dot dot-md bg-success"></span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="avatar avatar-sm mt-2">
+                            <img src="~/images/avatar/default-avatar.png" alt="..." class="avatar-img rounded-circle">
+                        </span>
+                        <div class="d-none d-md-block d-lg-inline-block"> Hi, @User.Identity.Name</div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        @if (User.IsInRole("Users"))
+                        {
+                            <a class="dropdown-item" href="@Url.Action("Account", "Setting")">  Account</a>
+                            <a class="dropdown-item" href="@Url.Action("Setting", "Setting")">  Settings</a>
+                        }
+                        <div class="dropdown-divider"></div>
+                        @*<a class="dropdown-item" href="@Url.Action("Logout", "Login")"><i data-feather="log-out"></i> Logout</a>*@
+                        @* @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "dropdown-item" }) *@
+                        <a class="nav-link text-dark" asp-controller="Account" asp-action="SignOut">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+            <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+                <i class="fe fe-x"><span class="sr-only"></span></i>
+            </a>
+            <nav class="vertnav navbar navbar-light">
+                <!-- nav bar -->
+                <div class="w-100 mb-4 d-flex">
+                    <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="#">
+                        @*<svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
+                        <g>
+                        <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
+                        <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+                        <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+                        </g>
+                        </svg>*@
+                        <img src="~/images/logo-sm.png" width="50" height="50">
+                    </a>
+                </div>
+                <ul class="navbar-nav flex-fill w-100 mb-2">
+                    <li class="nav-item w-100">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">
+                            <i class="fe fe-home fe-16"></i>
+                            <span class="ml-3 item-text"> Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="text-muted nav-heading mt-4 mb-1">
+                    <span> MainMenu</span>
+                </p>
+                <ul class="navbar-nav flex-fill w-100 mb-2">
+
+
+                    <li class="nav-item dropdown">
+                        <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-layers fe-16"></i>
+                            <span class="ml-3 item-text"> Procedures</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+                            @if (User.IsInRole("Receipt Vouchers"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "Receipts")"><span class="ml-1 item-text"> ReceiptVouchers</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Payment Vouchers"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "Payments")"><span class="ml-1 item-text"> PaymentVouchers</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Journal Vouchers"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "Journals")"><span class="ml-1 item-text"> JournalVouchers</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Receipt Checks"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "ReceiptChecks")"><span class="ml-1 item-text"> ReceiptChecks</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Process Receipt Checks"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "ReceiptChecksProcess")"><span class="ml-1 item-text"> ProcessReceiptChecks</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Payment Checks"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "PaymentChecks")"><span class="ml-1 item-text"> PaymentChecks</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Process Payment Checks"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "PaymentChecksProcess")"><span class="ml-1 item-text"> ProcessPaymentChecks</span></a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a href="#Services" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-layers fe-16"></i>
+                            <span class="ml-3 item-text"> Services</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="Services">
+                            @if (User.IsInRole("Services"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "Services")"><span class="ml-1 item-text"> Services</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Service Invoice"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("Index", "ServiceInvoice")"><span class="ml-1 item-text"> ServiceInvoice</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Service Invoice Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("ServiceInvoiceReport", "Reports")"><span class="ml-1 item-text"> ServiceInvoiceReport</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Services Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("ServicesReport", "Reports")"><span class="ml-1 item-text"> ServicesReport</span></a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-file fe-16"></i>
+                            <span class="ml-3 item-text"> FinancialReports</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+                            @if (User.IsInRole("Account Statement Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("AccountStatement", "Reports")"><span class="ml-1 item-text"> AccountStatement</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Journal Vouchers Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("JournalVouchersReport", "Reports")"><span class="ml-1 item-text"> JournalVouchers</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Receipt Vouchers Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("ReceiptVouchersReport", "Reports")"><span class="ml-1 item-text"> ReceiptVouchers</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Payment Vouchers Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("PaymentVouchersReport", "Reports")"><span class="ml-1 item-text"> PaymentVouchers</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Receipt Checks Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("ReceiptChecksReport", "Reports")"><span class="ml-1 item-text"> ReceiptChecks</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Payment Checks Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("PaymentChecksReport", "Reports")"><span class="ml-1 item-text"> PaymentChecks</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Trail Balance Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("TrailBalance", "Reports")"><span class="ml-1 item-text"> TrailBalance</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("General Ledger Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("GeneralLedger", "Reports")"><span class="ml-1 item-text"> GeneralLedger</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Balance Sheet Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("BalanceSheet", "Reports")"><span class="ml-1 item-text"> BalanceSheet</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Income List Report"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pl-3" href="@Url.Action("IncomeList", "Reports")"><span class="ml-1 item-text"> IncomeList</span></a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+
+                <p class="text-muted nav-heading mt-4 mb-1">
+                    <span>@DateTime.Now.Year &copy; <a href="http://shams-acc.com" target="_blank">shams soft</a></span>
+                </p>
+            </nav>
+        </aside>
+        <main role="main" class="main-content">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <partial name="_LoginInfo" />
-                    </form>
+                <div class="row justify-content-center">
+                    <div class="col-12">
+
+                        @RenderBody()
+
+                    </div> <!-- .col-12 -->
+                </div> <!-- .row -->
+            </div> <!-- .container-fluid -->
+            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="list-group list-group-flush my-n3">
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-book fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Records Counter:</strong></small>
+                                            <div class="my-0 text-muted small">Total: @ViewBag.validRecords</div>
+                                            <div class="my-0 text-muted small">Current: @ViewBag.myRecords</div>
+                                            <div class="my-0 text-muted small">Remain: @ViewBag.remRecords</div>
+                                            @*<small class="badge badge-pill badge-light text-muted">1m ago</small>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-users fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Users Counter:</strong></small>
+                                            <div class="my-0 text-muted small">Total: @ViewBag.validUsers</div>
+                                            <div class="my-0 text-muted small">Current: @ViewBag.myUsers</div>
+                                            <div class="my-0 text-muted small">Remain: @ViewBag.remUsers</div>
+                                            @*<small class="badge badge-pill badge-light text-muted">1m ago</small>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-award fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Contract Validation:</strong></small>
+                                            <div class="my-0 text-muted small">Valid To: @ViewBag.validTo</div>
+                                            <div class="my-0 text-muted small">Remain: @ViewBag.remValidTo</div>
+                                            @*<small class="badge badge-pill badge-light text-muted">1m ago</small>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*<div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                <div class="col-auto">
+                                <span class="fe fe-link fe-24"></span>
+                                </div>
+                                <div class="col">
+                                <small><strong>Link was attached to menu</strong></small>
+                                <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                                <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                                </div>
+                                </div>
+                                </div>*@
+
+                            </div> <!-- / .list-group -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - MyApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        </main> <!-- main -->
+    </div> <!-- .wrapper -->
+
+
+    <script src="~/theme_light/js/jquery.min.js"></script>
+    <script src="~/theme_light/js/popper.min.js"></script>
+    <script src="~/theme_light/js/moment.min.js"></script>
+    <script src="~/theme_light/js/bootstrap.min.js"></script>
+    <script src="~/theme_light/js/simplebar.min.js"></script>
+    <script src='~/theme_light/js/daterangepicker.js'></script>
+    <script src='~/theme_light/js/jquery.stickOnScroll.js'></script>
+    <script src="~/theme_light/js/tinycolor-min.js"></script>
+    <script src="~/theme_light/js/config.js"></script>
+    <script src="~/theme_light/js/d3.min.js"></script>
+    <script src="~/theme_light/js/topojson.min.js"></script>
+    <script src="~/theme_light/js/datamaps.all.min.js"></script>
+    <script src="~/theme_light/js/datamaps-zoomto.js"></script>
+    <script src="~/theme_light/js/datamaps.custom.js"></script>
+    <script src="~/theme_light/js/Chart.min.js"></script>
+    <script src='~/theme_light/js/jquery.dataTables.min.js'></script>
+    <script src='~/theme_light/js/dataTables.bootstrap4.min.js'></script>
+
+    <script>
+        /* defind global options */
+        Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+        Chart.defaults.global.defaultFontColor = colors.mutedColor;
+    </script>
+    <script src="~/theme_light/js/gauge.min.js"></script>
+    <script src="~/theme_light/js/jquery.sparkline.min.js"></script>
+    <script src="~/theme_light/js/apexcharts.min.js"></script>
+    <script src="~/theme_light/js/apexcharts.custom.js"></script>
+    <script src='~/theme_light/js/jquery.mask.min.js'></script>
+    <script src='~/theme_light/js/select2.min.js'></script>
+    <script src='~/theme_light/js/jquery.steps.min.js'></script>
+    <script src='~/theme_light/js/jquery.validate.min.js'></script>
+    <script src='~/theme_light/js/jquery.timepicker.js'></script>
+    <script src='~/theme_light/js/dropzone.min.js'></script>
+    <script src='~/theme_light/js/uppy.min.js'></script>
+    <script src='~/theme_light/js/quill.min.js'></script>
+
+    <script src="~/theme_light/js/apps.js"></script>
+
+    <!-- Dashboard -->
+    <script src="~/dashboard/c3.js"></script>
+    <script src="~/dashboard/c3.min.js"></script>
+    <script src="~/dashboard/d3.js"></script>
+    <script src="~/dashboard/d3.min.js"></script>
+    <!-- alertify -->
+    <script src="~/alertifyjs/alertify.js"></script>
+    <script src="~/alertifyjs/alertify.min.js"></script>
+
+    <script>
+        $('.select2').select2(
+            {
+                theme: 'bootstrap4',
+            });
+        $('.select2-multi').select2(
+            {
+                multiple: true,
+                theme: 'bootstrap4',
+            });
+    </script>
+    <script>
+        $('#dataTable-1').DataTable(
+            {
+                autoWidth: true,
+                "lengthMenu": [
+                    [16, 32, 64, -1],
+                    [16, 32, 64, "All"]
+                ]
+            });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

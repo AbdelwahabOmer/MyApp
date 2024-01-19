@@ -7,7 +7,8 @@
     {
     <li class="nav-item">
 
-        hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)
+        hello @(User.FindFirst("UserName").Value + " " + User.FindFirst("CMP").Value)
+        @* hello @User.Identity.Name *@
         <a class="btn btn-warning" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
         <a class="btn btn-danger" asp-controller="Account" asp-action="SignOut">SignOut</a>
     </li>

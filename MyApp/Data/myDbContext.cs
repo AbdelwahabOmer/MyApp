@@ -13,5 +13,6 @@ namespace MyApp.Data
         }
 
         public DbSet<Books> Books { get; set; }
+        public DbSet<CompanyInfo> CompanyInfo { get; set; }
     }
 }

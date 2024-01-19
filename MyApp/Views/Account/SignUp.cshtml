@@ -5,11 +5,12 @@
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>SignUp</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <title>Sign In</title>
 
     <environment include="Development">
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
@@ -17,75 +18,163 @@
     <environment exclude="Development">
         <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     </environment>
+    <link rel="stylesheet" href="~/assets/css/app.css">
 
+    <style>
+
+    </style>
 </head>
+
+
+
 <body>
 
-    <div class="container">
+    <div id="auth">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 mx-auto">
+                    <div class="card pt-4">
+                        <div class="card-body">
+                            <div class="text-center mb-2">
+                                <img src="~/images/favicon.ico" height="75" class='mb-4'>
+                            </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <h4>SignUp</h4>
-                <hr />
-                <form asp-action="SignUp">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="LastName" class="control-label"></label>
-                        <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="SignUp" class="btn btn-primary" />
-                    </div>
-                </form>
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border" role="status" id="myLoader" style="display:none">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
 
-                <br />
-                <div>
-                    <p><a asp-action="SignIn" asp-controller="Account">Sign In </a></p>
+                            <form method="post" data-ajax="true" data-ajax-complete="myComplete"
+                                  data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @* <div class="form-group position-relative has-icon-left">
+                                <label asp-for="CMP" class="control-label"></label>
+                                <div class="position-relative">
+                                <input asp-for="CMP" class="form-control" />
+                                <div class="form-control-icon">
+                                <i data-feather="user"></i>
+                                </div>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                </div> *@
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Name" class="control-label"></label>
+                                            <input asp-for="Name" class="form-control" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Email" class="control-label"></label>
+                                            <input asp-for="Email" class="form-control" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Web" class="control-label"></label>
+                                            <input asp-for="Web" class="form-control" />
+                                            <span asp-validation-for="Web" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Address" class="control-label"></label>
+                                            <input asp-for="Address" class="form-control" />
+                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Phone" class="control-label"></label>
+                                            <input asp-for="Phone" class="form-control" />
+                                            <span asp-validation-for="Phone" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="CompanyType" class="control-label"></label>
+                                            <select asp-for="CompanyType" class="form-control">
+                                                <option value="1">Service Company</option>
+                                                <option value="2">Commodity Company</option>
+                                                <option value="3">Travel Agency</option>
+                                                <option value="4">Shareholders Company</option>
+                                                <option value="5">Medical Clinic</option>
+
+                                            </select>
+                                            <span asp-validation-for="CompanyType" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Password" class="control-label"></label>
+                                            <input asp-for="Password" class="form-control" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="ConfirmPassword" class="control-label"></label>
+                                            <input asp-for="ConfirmPassword" class="form-control" />
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="clearfix my-4">
+                                    <div class="float-start">
+                                        <a asp-action="SignIn" asp-controller="Account">Have Account?</a>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <input type="submit" value="Sign Up" class="btn btn-primary float-end" style="width:100%" />
+                                </div>
+
+                            </form>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-8">
-                <img src="~/images/sign-up.webp" class="img-fluid" />
-            </div>
         </div>
-
     </div>
 
 
+    <script src="~/assets/js/feather-icons/feather.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/js/main.js"></script>
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/jquery-validate/jquery.validate.js"></script>
-        <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/jquery-validate/jquery.validate.min.js"></script>
-        <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
-
 </body>
 </html>

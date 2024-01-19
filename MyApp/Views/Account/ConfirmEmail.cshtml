@@ -1,44 +1,101 @@
 ﻿@model EmailConfirmModel
+
 @{
-    ViewData["Title"] = "ConfirmEmil";
+    Layout = null;
 }
 
-<div class="container">
-    <div class="row text-center">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-            @if (Model.EmailVerified == true)
-            {
-                <div class="alert alert-success" role="alert">
-                    <p>Your email has been verified successfully.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <title>Confirm Email</title>
+
+    <environment include="Development">
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    </environment>
+    <link rel="stylesheet" href="~/assets/css/app.css">
+
+    <style>
+
+    </style>
+</head>
+
+
+
+<body>
+
+    <div id="auth">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 mx-auto">
+                    <div class="card pt-4">
+                        <div class="card-body">
+                            <div class="text-center mb-2">
+                                <img src="~/images/favicon.ico" height="75" class='mb-4'>
+                            </div>
+
+                            @if (Model.EmailVerified == true)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    <p>Your email has been verified successfully.</p>
+                                </div>
+
+                                <a asp-action="SignIn" asp-controller="Account">SignIn</a>
+                            }
+                            else
+                            {
+                                if (Model.EmailSent)
+                                {
+                                    <p>email sent to your registerd email id.</p>
+                                }
+                                else
+                                {
+                                    <p>we have sent you an email on your email id. click on the link to sign in</p>
+                                }
+
+                                <form asp-action="ConfirmEmail">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="Email" />
+
+                                    <div class="alert alert-danger" role="alert">
+                                        <p>did not get any email or deleted by mistake?.</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit" value="resend cofirmation email" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            }
+
+                        </div>
+                    </div>
                 </div>
-            }
-            else
-            {
-                if (Model.EmailSent)
-                {
-                    <p>email sent to your registerd email id.</p>
-                }
-                else
-                {
-                    <p>we have sent you an email on your email id. click on the link to sign in</p>
-                }
-
-                <form asp-action="ConfirmEmail">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Email" />
-
-                    <div class="alert alert-danger" role="alert">
-                        <p>did not get any email or deleted by mistake?.</p>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" value="resend cofirmation email" class="btn btn-primary" />
-                    </div>
-                </form>
-            }
+            </div>
         </div>
     </div>
-</div>
 
+
+    <script src="~/assets/js/feather-icons/feather.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <environment include="Development">
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/jquery-validate/jquery.validate.js"></script>
+        <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    </environment>
+</body>
+</html>

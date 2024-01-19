@@ -17,8 +17,8 @@ namespace MyApp.Models
         {
             var identity = await base.GenerateClaimsAsync(user);
 
-            identity.AddClaim(new Claim("UserFirstName", user.FirstName ?? ""));
-            identity.AddClaim(new Claim("UserLastName", user.LastName ?? ""));
+            identity.AddClaim(new Claim("UserName", user.UserName ?? ""));
+            identity.AddClaim(new Claim("CMP", user.CMP ?? ""));
 
             return identity;
         }

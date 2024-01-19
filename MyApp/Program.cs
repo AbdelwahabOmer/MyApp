@@ -24,7 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.Password.RequiredLength = 4;
+    options.Password.RequiredLength = 3;
     options.Password.RequiredUniqueChars = 1;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
@@ -55,6 +55,11 @@ builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SM
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
 
+
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = builder.Configuration["Application:LoginPath"];
+});
 
 
 

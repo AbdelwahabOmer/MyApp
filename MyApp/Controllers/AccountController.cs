@@ -15,13 +15,13 @@ namespace MyApp.Controllers
         }
 
 
-        [Route("signup")]
+        [Route("Signup")]
         public IActionResult SignUp()
         {
             return View();
         }
 
-        [Route("signup")]
+        [Route("Signup")]
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpUserModel userModel)
         {
@@ -44,15 +44,15 @@ namespace MyApp.Controllers
 
 
 
-        [Route("signin")]
+        [Route("Signin")]
         public IActionResult SignIn()
         {
             return View();
         }
 
-        [Route("signin")]
+        [Route("Signin")]
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInUserModel userModel, string returnUrl)
+        public async Task<IActionResult> SignIn(SignInUserModel userModel, string? returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace MyApp.Controllers
                 }
                 else if (result.IsNotAllowed)
                 {
-                    ModelState.AddModelError("", "Not allow to login, confirm your email");
+                    ModelState.AddModelError("", "Not allow to signin, confirm your email");
                 }
                 else if (result.IsLockedOut)
                 {
@@ -75,7 +75,7 @@ namespace MyApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid Credentials");
+                    ModelState.AddModelError("", "Email or password incorrect...");
                 }
             }
             return View(userModel);
@@ -83,22 +83,22 @@ namespace MyApp.Controllers
 
 
 
-        [Route("signout")]
+        [Route("Signout")]
         public async Task<IActionResult> SignOut()
         {
             await _accountRepository.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SignIn", "Account");
         }
 
 
 
-        [Route("change-password")]
+        [Route("Change-password")]
         public IActionResult ChangePassword()
         {
             return View();
         }
 
-        [HttpPost("change-password")]
+        [HttpPost("Change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
@@ -121,7 +121,7 @@ namespace MyApp.Controllers
 
 
 
-        [HttpGet("confirm-emil")]
+        [HttpGet("Confirm-emil")]
         public async Task<IActionResult> ConfirmEmail(string uid, string token, string email)
         {
             EmailConfirmModel model = new EmailConfirmModel
@@ -142,7 +142,7 @@ namespace MyApp.Controllers
             return View(model);
         }
 
-        [HttpPost("confirm-emil")]
+        [HttpPost("Confirm-emil")]
         public async Task<IActionResult> ConfirmEmail(EmailConfirmModel model)
         {
             var user = await _accountRepository.GetUserByEmailAsync(model.Email);
@@ -167,13 +167,13 @@ namespace MyApp.Controllers
 
 
 
-        [AllowAnonymous, HttpGet("forgot-password")]
+        [AllowAnonymous, HttpGet("Forgot-password")]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
-        [AllowAnonymous, HttpPost("forgot-password")]
+        [AllowAnonymous, HttpPost("Forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgetPasswordModel model)
         {
             if (ModelState.IsValid)
@@ -195,7 +195,7 @@ namespace MyApp.Controllers
 
 
 
-        [AllowAnonymous, HttpGet("reset-password")]
+        [AllowAnonymous, HttpGet("Reset-password")]
         public IActionResult ResetPassword(string uid, string token)
         {
             ResetPasswordModel model = new ResetPasswordModel
@@ -206,7 +206,7 @@ namespace MyApp.Controllers
             return View(model);
         }
 
-        [AllowAnonymous, HttpPost("reset-password")]
+        [AllowAnonymous, HttpPost("Reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
         {
             if (ModelState.IsValid)
